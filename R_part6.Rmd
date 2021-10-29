@@ -1,0 +1,80 @@
+---
+title: "W13_part6"
+output: html_document
+---
+
+```{r setup}
+datfile <- "http://personality-project.org/r/datasets/R.appendix5.data"
+
+data <- read.table(datfile, header = TRUE)
+
+names(data)
+
+#Dosage -> A, B, C
+#Valence -> Negative, Neutral, Positive
+#Tasks -> Cued (C), Free recall (F)
+
+
+```
+
+
+
+```{r cars, echo=FALSE}
+#########
+#Exercise
+#########
+
+#Question 1
+attach(data)
+boxplot(Recall~Dosage)
+
+#1st argument: the variable we want to tabulate
+#2nd argument: the classifying factor
+#3rd argument: what we want to tabulate
+tapply(Recall, Dosage, mean)
+
+#To produce multi-way tables
+tapply(Recall, list(Gender, Dosage), mean)
+
+tapply(Recall, list(Dosage, Task, Gender), mean)
+
+#if we want to if ignore the missing values, and calculate the mean of the non-missing values
+tapply(Recall, Dosage, mean, na.rm = TRUE)
+
+RecallNA <- Recall
+RecallNA[sample(1:108, 6)] <- NA
+
+#na.rm = TRUE shows that the missing value was ignored
+tapply(RecallNA, Dosage, mean, na.rm=TRUE)
+```
+
+
+```{r Plot, echo=FALSE}
+
+par(mfrow = c(2, 2))
+
+#Barplot of a single factor
+tab1 <- tapply(Recall, Dosage, mean)
+barplot(tab1)
+
+
+# Barplot of two factors, stacked by default
+tab2 <- tapply( Recall, list(Gender, Dosage), mean)
+barplot(tab2)
+
+#Alternatively, side by side
+batplot(tab2, beside = TRUE, col=c(1,2))
+
+# Difficult to find anywhere to put the legend. Automatic positioning
+# using legend.text option of barplot() gives poor results here
+
+legend(locator(1), c("F", "M"), fill c(1,2))
+
+# An alternative to the barplot. Note the use of
+# t() to transpose the table, so that Gender
+# becomes the primary factor and Dosage secondary
+dotchart(t(tab2))
+
+```
+
+-------------
