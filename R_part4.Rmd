@@ -1,0 +1,65 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+setwd("\\\\files.kent.ac.uk/usersy/yc336/home/Essential-User-Settings/Desktop/Kent 1st sem/Actuarial Research/w12")
+SP <- scan("SP.txt")
+```
+----------------------Dataset for babies---------------------
+```{r}
+setwd("\\\\files.kent.ac.uk/usersy/yc336/home/Essential-User-Settings/Desktop/Kent 1st sem/Actuarial Research/w12")
+babies <- read.table("babies.txt", header = TRUE)
+
+oil <- read.table("oil.txt", skip = 13, header = TRUE)
+
+#if skip 15 lines, column names are skipped as well. the default variable names are V1, V2, ....
+oil <- read.table("\\\\files.kent.ac.uk/usersy/yc336/home/Essential-User-Settings/Desktop/Kent 1st sem/Actuarial Research/w12/oil.txt", skip = 15)
+names(oil)
+
+#To assign new names use
+names(oil) <- c("X1", "X2", "X3", "X4", "Y")
+
+#alternatively
+oil <- read.table("oil.txt", skip = 15, col.names = c("X1", "X2", "X3", "X4", "Y"))
+
+
+#the variable with values coded numerically, like parity or smoke, R will read these as numeric variables and you have to convert to factors use as.factor()
+summary(babies$parity)
+babies$parity <-as.factor(babies$parity)
+
+#Note that for factors, the summary() function just gives the number of observations that have each factor level.
+
+cars <- read.table("cars.txt", header=TRUE)
+```
+----------------------Dataset for babies---------------------
+```{r}
+
+#factor will have the impact of ordering
+cars <- read.table("cars.txt", header=TRUE)
+cars$make <-as.character(cars$make)
+summary(cars$make)
+
+#Use as.character() to convert a factor to a character vector:
+
+
+setwd("\\\\files.kent.ac.uk/usersy/yc336/home/Essential-User-Settings/Desktop/Kent 1st sem/Actuarial Research/w12")
+counties <-read.csv("counties.csv", header = TRUE)
+
+
+```
+
+----------------------Plots for babies---------------------
+
+```{r}
+attach(babies)
+plot(gestation, bwt)
+
+
+```
+
